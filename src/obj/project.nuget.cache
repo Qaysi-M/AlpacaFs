@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "IWla20tww2ugV/bIPsP5yPeWdmuiKhHqXWRMbtahn0d1KZcGeLyVYLZWvTes2Vy0+tFg//g2BJASGDSVufWSqg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Qaysi\\Home\\source\\vsc\\fs\\alpaca\\src\\alpaca.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Qaysi\\.nuget\\packages\\flurl\\3.0.1\\flurl.3.0.1.nupkg.sha512",
+    "C:\\Users\\Qaysi\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512",
+    "C:\\Users\\Qaysi\\.nuget\\packages\\fsharp.data\\4.0.1\\fsharp.data.4.0.1.nupkg.sha512",
+    "C:\\Users\\Qaysi\\.nuget\\packages\\fsharp.json\\0.4.0\\fsharp.json.0.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

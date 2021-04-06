@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="alpacaFs.fs" />
+    <Compile Include="jsonTransforms.fs" />
+    <Compile Include="config.fs" />
+    <Compile Include="account.fs" />
+    <Compile Include="data.fs" />
+    <Compile Include="asset.fs" />
+    <Compile Include="order.fs" />
+    <Compile Include="position.fs" />
+    <Compile Include="watchlist.fs" />
+    <Compile Include="calendar.fs" />
+    <Compile Include="clock.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data" Version="4.0.1" />
+    <PackageReference Include="Flurl" Version="3.0.1" />
+    <PackageReference Include="FSharp.Json" Version="0.4.0" />
+  </ItemGroup>
+</Project>
