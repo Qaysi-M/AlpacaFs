@@ -16,6 +16,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgJson_Net Condition=" '$(PkgJson_Net)' == '' ">C:\Users\Qaysi\.nuget\packages\json.net\1.0.25</PkgJson_Net>
     <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\Qaysi\.nuget\packages\fsharp.core\5.0.0</PkgFSharp_Core>
     <PkgFSharp_Json Condition=" '$(PkgFSharp_Json)' == '' ">C:\Users\Qaysi\.nuget\packages\fsharp.json\0.4.0</PkgFSharp_Json>
     <PkgFSharp_Data Condition=" '$(PkgFSharp_Data)' == '' ">C:\Users\Qaysi\.nuget\packages\fsharp.data\4.0.1</PkgFSharp_Data>

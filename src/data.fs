@@ -7,20 +7,29 @@ open System
 open FSharp.Data
 open FSharp.Json
 open Flurl
+open Json.Net
 
 open System.Threading
 open System.Net.WebSockets
 
-// TO DO : pass DateTime instead of string
 
-type Trades = { trades: Trade list; symbol: string; next_page_token: string option}
-and Trade = { [<JsonField("S")>] S': string option; t: DateTime; x: string; p: decimal; s: int; c: string list; i: int64; z: string} 
+type Trades = { trades: Trade array; symbol: string; next_page_token: string option} with 
+    static member Zero = {trades = [||]; symbol = ""; next_page_token = None}
+and [<CLIMutable>] Trade = { x: string; p: decimal; c: string array; i: int64} 
         
-type Quotes = {quotes: Quote list; symbol: string; next_page_token: string option}
-and Quote = {[<JsonField("S")>] S': string option; t: DateTime; ax: string;  ap: decimal; [<JsonField("as")>] as': int; bx: string; bp: decimal; bs: int; c: string list; z: string option}
+type Quotes = {  quotes: Quote array; symbol: string; next_page_token: string option} with 
+    static member Zero = {quotes = [||]; symbol = ""; next_page_token = None}
+and Quote = {[<JsonField("S")>] S': string option; t: DateTime; ax: string;  ap: decimal; [<JsonField("as")>] as': int; bx: string; bp: decimal; 
+                bs: int; c: string list; z: string option} with 
+    static member Zero = 
+        {S' = None; t = DateTime.MinValue; ax = "";  ap = decimal 0; as' = 0; bx = ""; bp = decimal 0.0; 
+            bs = 0; c = []; z = None}
 
-type Bars = { bars: Bar list; symbol: string; next_page_token: string option}
-and Bar = {[<JsonField("S")>] S': string option; t: DateTime; o: decimal; h: decimal; l: decimal; c: decimal; v: int}
+type Bars = { bars: Bar array; symbol: string; next_page_token: string option} with 
+    static member Zero = {bars = [||]; symbol = ""; next_page_token = None}
+and Bar = {[<JsonField("S")>] S': string option; t: DateTime; o: decimal; h: decimal; l: decimal; c: decimal; v: Int64} with
+    static member Zero = 
+        {S' = None; t = DateTime.MinValue; o = decimal 0; h = decimal 0; l = decimal 0; c = decimal 0; v = int64 0}
 
 [<RequireQualifiedAccess>]
 module Data = 
@@ -35,48 +44,53 @@ module Data =
     
     [<RequireQualifiedAccess>]
     module Historical = 
-        let DATA_POINT = "https://data.alpaca.markets/v2"
+        let private DATA_POINT = "https://data.alpaca.markets/v2"
         
         let tz = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time")
         let EST t = TimeZoneInfo.ConvertTimeFromUtc(t, tz)    
         
         [<RequireQualifiedAccess>]
         module Trades = 
-            let TRADES_POINT symbol = Url.Combine(DATA_POINT, "stocks", symbol, "trades")
-            let get (start: string) (end': string) (symbol: string) = 
-                let response = 
-                    fun () ->
-                        Http.Request( TRADES_POINT symbol, 
-                                        httpMethod = "GET",
-                                        query = ["start", start; "end", end'],
-                                        headers = HEADERS)
-                handleResponse<Trades> response
+            let private TRADES_POINT symbol = Url.Combine(DATA_POINT, "stocks", symbol, "trades")
+            let get (start: DateTime) (end': DateTime) (symbol: string) =  
+                let start = Helpers.dateToString (start.ToUniversalTime())
+                let end' = Helpers.dateToString (end'.ToUniversalTime())
+                fun () ->
+                    Http.Request( TRADES_POINT symbol, 
+                                    httpMethod = "GET",
+                                    query = ["start", start; "end", end'],
+                                    headers = HEADERS)
+                |> handleResponse<Trades>
 
         [<RequireQualifiedAccess>]
         module Quotes = 
-            let QUOTES_POINT symbol = Url.Combine(DATA_POINT, "stocks", symbol, "quotes")
+            let private QUOTES_POINT symbol = Url.Combine(DATA_POINT, "stocks", symbol, "quotes")
 
-            let get (start: string) (end': string) (symbol: string) (limit: int)= 
-                let response = 
-                    fun () ->
-                        Http.Request( QUOTES_POINT symbol, 
-                                            httpMethod = "GET",
-                                            query = ["start", start; "end",  end'; "limit", string limit],
-                                            headers = HEADERS)
-                handleResponse<Quotes> response
+            /// <summary>provides NBBO quotes for a given ticker symbol</summary>
+            let get (start: DateTime) (end': DateTime) (symbol: string) (limit: int) = 
+                let start = Helpers.dateToString (start.ToUniversalTime())
+                let end' = Helpers.dateToString (end'.ToUniversalTime())
+                fun () ->
+                    Http.Request( QUOTES_POINT symbol, 
+                                        httpMethod = "GET",
+                                        query = ["start", start; "end",  end'; "limit", string limit],
+                                        headers = HEADERS)
+                |> handleResponse<Quotes>
                  
         [<RequireQualifiedAccess>]
         module Bars =    
-            let BARS_POINT symbol = Url.Combine(DATA_POINT, "stocks", symbol, "bars")                             
+            let private BARS_POINT symbol = Url.Combine(DATA_POINT, "stocks", symbol, "bars")   
 
-            let get (start: string) (end': string) (symbol: string) (limit: int) (timeFrame: TimeFrame) = 
-                let reponse =      
-                    fun () ->
-                        Http.Request( BARS_POINT symbol, 
-                                            httpMethod = "GET",
-                                            query = ["start", string start; "end", string end'; "limit", "1000"; "timeframe", TimeFrame.string timeFrame ],
-                                            headers = HEADERS)
-                handleResponse<Bars> reponse  
+            /// <summary>returns aggregate historical data for the requested securities</summary>
+            let get (start: DateTime) (end': DateTime) (symbol: string) (limit: int) (timeFrame: TimeFrame) = 
+                let start = Helpers.dateToString (start.ToUniversalTime())
+                let end' = Helpers.dateToString (end'.ToUniversalTime())
+                fun () ->
+                    Http.Request( BARS_POINT symbol, 
+                                        httpMethod = "GET",
+                                        query = ["start", string start; "end", string end'; "limit", "1000"; "timeframe", TimeFrame.string timeFrame ],
+                                        headers = HEADERS)
+                |> handleResponse<Bars>  
 
     [<RequireQualifiedAccess>]
     module Real = 
@@ -165,9 +179,9 @@ module Data =
                 } |> Async.RunSynchronously
             |> State
 
-        let subscribe() =
+        let subscribe trades quotes bars =
             let subscription = 
-                { action = "subscribe"; trades = ["AAPL"]; quotes = []; bars = [] }
+                { action = "subscribe"; trades = trades; quotes = quotes; bars = bars }
                 |> Json.serialize
             fun (stream: Stream) ->      
                 async {
@@ -195,7 +209,7 @@ module Data =
                         |> Async.AwaitTask
                         |> Async.Ignore
                     return
-                        (Text.Encoding.Default.GetString(buf)|> Json.deserialize<Trade list>, stream)
+                        (Text.Encoding.Default.GetString(buf) |> JsonNet.Deserialize<Trade array>, stream)
                 } |> Async.RunSynchronously
             |> State
 

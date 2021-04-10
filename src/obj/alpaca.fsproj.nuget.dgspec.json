@@ -59,6 +59,11 @@
               "target": "Package",
               "version": "[3.0.1, )",
               "generatePathProperty": true
+            },
+            "Json.Net": {
+              "target": "Package",
+              "version": "[1.0.25, )",
+              "generatePathProperty": true
             }
           },
           "imports": [

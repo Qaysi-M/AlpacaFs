@@ -21,26 +21,25 @@ let main argv =
     stream {
         yield! Data.Real.connect()
         yield! Data.Real.authenticate()
-        let! msg =  Data.Real.subscribe()
+        let! msg =  Data.Real.subscribe [] [] []
         printfn "%s" msg
-    }
-    
+    } |> ignore
+   
     let rec loop (k: ConsoleKeyInfo) = 
         match k with 
-        |k when k.Key.Equals(ConsoleKey.Enter) -> 
+        | k when k.Key.Equals(ConsoleKey.Enter) -> 
             stream {
                 let! msg = Data.Real.listen ()
                 msg
                 |> printfn "%A"    
-            }
-            
+            }  
         | _ ->  
             stream {
                 let! msg = Data.Real.listen ()
                 msg
-                |> printfn "%A"    
+                |> printfn "%A"
             } |> ignore
             loop k
     let keyStroke = Console.ReadKey()
-    loop keyStroke
+    loop keyStroke |> ignore
     0

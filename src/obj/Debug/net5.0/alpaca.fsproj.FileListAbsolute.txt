@@ -28,3 +28,4 @@ C:\Users\Qaysi\Home\source\vsc\fs\alpaca\src\obj\Debug\net5.0\alpaca.fsproj.Copy
 C:\Users\Qaysi\Home\source\vsc\fs\alpaca\src\obj\Debug\net5.0\alpaca.dll
 C:\Users\Qaysi\Home\source\vsc\fs\alpaca\src\obj\Debug\net5.0\alpaca.pdb
 C:\Users\Qaysi\Home\source\vsc\fs\alpaca\src\obj\Debug\net5.0\alpaca.genruntimeconfig.cache
+C:\Users\Qaysi\Home\source\vsc\fs\alpaca\src\bin\Debug\net5.0\Json.Net.dll

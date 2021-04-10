@@ -5,8 +5,7 @@ open System
 open Flurl
 
 
-
-module Config =
+module internal Config =
     let BASE_POINT = "https://paper-api.alpaca.markets/v2"
     let ACCOUNT_POINT = Url.Combine(BASE_POINT, "/account")
     let API_KEY = System.Environment.GetEnvironmentVariable("APCA-API-KEY-ID", EnvironmentVariableTarget.User)

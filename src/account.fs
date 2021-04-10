@@ -55,7 +55,7 @@ module Account =
         }
     [<RequireQualifiedAccess>]
     module Configuration = 
-        let CONFIGURATION_POINT = Url.Combine(ACCOUNT_POINT, "/configurations" )
+        let private CONFIGURATION_POINT = Url.Combine(ACCOUNT_POINT, "/configurations" )
 
         let get () = 
             Http.RequestString( CONFIGURATION_POINT,
@@ -105,6 +105,10 @@ module Account =
             FILL | TRANS | MISC | ACATC | ACATS | CSD | CSR | DIV | DIVCGL | DIVCGS | DIVFEE | DIVFT | DIVNRA | DIVROC | DIVTW
             | DIVTXEX| INT| INTNRA| INTTW| JNL| JNLC| JNLS| MA| NC| OPASN| OPEXP| OPXRC| PTC| PTR| REORG| SC| SSO 
         let private ACTIVITIES_POINT = Url.Combine(ACCOUNT_POINT, "/activities")
+
+        
+        // -- Functions --
+
         let get (activityType: Type') =
             let ACTIVITY_POINT activity_type = Url.Combine(ACTIVITIES_POINT, activity_type)
             let jsonConfig = JsonConfig.create(allowUntyped = true)

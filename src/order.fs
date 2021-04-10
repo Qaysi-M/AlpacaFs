@@ -46,6 +46,19 @@ module Order =
 
     let ORDERS_POINT = Url.Combine(BASE_POINT, "/orders" )
 
+    // -- Modeling --
+    
+    type Status =  Open | Closed  | All
+
+    type Direction = ASC | DSC
+
+    type Type' =  Market | Limit | Stop | Stop_limit | Trailing_stop
+    with    
+        static member private string exchange = 
+           nameof(AMEX).ToLower()
+
+   // -- Functions --
+
     let list (status:Status) (limit:int) = 
         let query = ["status",  (string status).ToLower(); "limit", string limit]
         fun () ->
@@ -85,22 +98,22 @@ module Order =
                         )
         |> handleResponse<Order>
 
-    let replace qty id = 
+    let replace qty (order: Order) = 
         let ORDER_POINT id = Url.Combine(ORDERS_POINT, id)
         let data = 
             {| qty = qty |}
             |> Json.serialize
         fun () ->
-            Http.Request( ORDER_POINT id,
+            Http.Request( ORDER_POINT order.id,
                             httpMethod = "PATCH",
                             body = TextRequest data,
                             headers = HEADERS)
         |> handleResponse<Order> 
 
-    let cancel id = 
+    let cancel (order: Order) = 
         let ORDER_POINT id = Url.Combine(ORDERS_POINT, id)
         fun () ->
-            Http.Request( ORDER_POINT id,
+            Http.Request( ORDER_POINT order.id,
                             httpMethod = "DELETE",
                             headers = HEADERS)
         |> handleDeleteResponse
@@ -113,13 +126,4 @@ module Order =
         |> handleDeleteResponse
     
 
-    // -- Modeling --
     
-    type Status =  Open | Closed  | All
-
-    type Direction = ASC | DSC
-
-    type Type' =  Market | Limit | Stop | Stop_limit | Trailing_stop
-    with    
-        static member private string exchange = 
-           nameof(AMEX).ToLower()
