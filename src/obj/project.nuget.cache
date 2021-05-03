@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ecxz98hZlz2pAnMrgFWMIiiUMKLKIOmE2pZsbXBwhW53lzSwsxoV1ggj2Q0LODiQVGOx4ajplHKmu6iKcpEutA==",
+  "dgSpecHash": "r2HGNRkL9ZGb/96qmsKxRVtKFiMiWrhY4Y8iTu5d38TKc+JKDHid+mE/AJp/E+R9A7DjM/ev8MvIP4yy2Py6gQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Qaysi\\Home\\source\\vsc\\fs\\alpaca\\src\\alpaca.fsproj",
   "expectedPackageFiles": [
@@ -8,7 +8,9 @@
     "C:\\Users\\Qaysi\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512",
     "C:\\Users\\Qaysi\\.nuget\\packages\\fsharp.data\\4.0.1\\fsharp.data.4.0.1.nupkg.sha512",
     "C:\\Users\\Qaysi\\.nuget\\packages\\fsharp.json\\0.4.0\\fsharp.json.0.4.0.nupkg.sha512",
-    "C:\\Users\\Qaysi\\.nuget\\packages\\json.net\\1.0.25\\json.net.1.0.25.nupkg.sha512"
+    "C:\\Users\\Qaysi\\.nuget\\packages\\fsharp.systemtextjson\\0.16.6\\fsharp.systemtextjson.0.16.6.nupkg.sha512",
+    "C:\\Users\\Qaysi\\.nuget\\packages\\json.net\\1.0.25\\json.net.1.0.25.nupkg.sha512",
+    "C:\\Users\\Qaysi\\.nuget\\packages\\system.text.json\\4.6.0\\system.text.json.4.6.0.nupkg.sha512"
   ],
   "logs": []
 }

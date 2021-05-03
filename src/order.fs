@@ -27,46 +27,84 @@ type Order = {
         [<JsonField(Transform=typeof<Asset.ClassTransform>)>] asset_class: Asset.Class'
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] qty: decimal 
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] filled_qty: decimal option
-        type': Order.Type' option
+        type': string option
         side: string option
-        time_in_force: TimeInForce option
+        time_in_force: string option
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] limit_price: decimal option
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] stop_price: decimal option
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] filled_avg_price: decimal option
-        status: Order.Status option
+        status: string option
         extended_hours: bool
-        legs: Order list option
+        legs: string list option
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] trail_price: decimal option
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] trail_percent: decimal option
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] hwm: decimal option
+    } with 
+    static member Zero = {
+        id = ""
+        client_order_id = None  
+        created_at = DateTime.MinValue
+        updated_at = None 
+        submitted_at = None 
+        filled_at = None
+        expired_at = None
+        canceled_at = None 
+        failed_at = None
+        replaced_at = None
+        replaced_by = None 
+        replaces = None
+        asset_id = ""
+        symbol = ""
+        asset_class = Asset.Class'.USEquity
+        qty = decimal 0
+        filled_qty = None 
+        type' = None 
+        side = None
+        time_in_force = None
+        limit_price = None
+        stop_price = None
+        filled_avg_price = None
+        status = None
+        extended_hours = false
+        legs = None
+        trail_price = None
+        trail_percent = None
+        hwm = None 
     }
 
 [<RequireQualifiedAccess>]
 module Order =
 
-    let ORDERS_POINT = Url.Combine(BASE_POINT, "/orders" )
+    let private ORDERS_POINT = Url.Combine(BASE_POINT, "/orders" )
 
-    // -- Modeling --
-    
-    type Status =  Open | Closed  | All
+    [<RequireQualifiedAccess>]
+    type Status =  Open | Closed  | All with 
+        override this.ToString() = 
+           nameof(this).ToLower()
 
+    [<RequireQualifiedAccess>]
     type Direction = ASC | DSC
 
-    type Type' =  Market | Limit | Stop | Stop_limit | Trailing_stop
-    with    
-        static member private string exchange = 
-           nameof(AMEX).ToLower()
+    [<RequireQualifiedAccess>]
+    type Type' =  Market | Limit | Stop | Stop_limit | Trailing_stop with    
+        override this.ToString() = 
+           nameof(this).ToLower()
+
+    [<RequireQualifiedAccess>]
+    type Side = Buy | Sell with 
+        override this.ToString() = 
+           nameof(this).ToLower()
 
    // -- Functions --
 
     let list (status:Status) (limit:int) = 
-        let query = ["status",  (string status).ToLower(); "limit", string limit]
+        let query = ["status",  status.ToString(); "limit", string limit]
         fun () ->
             Http.Request( ORDERS_POINT,
                     query = query,
                     httpMethod = "GET",
                     headers = HEADERS)
-        |> handleResponse<Order>
+        |> handleResponse<Order list>
     
     let get id = 
         let ORDER_POINT id = Url.Combine(ORDERS_POINT, id)
@@ -85,10 +123,9 @@ module Order =
                             headers = HEADERS)
         |> handleResponse<Order>    
 
-    type OrderBodyParam = {symbol: string; qty: int; side: string; [<JsonField("type")>] type': string; time_in_force: string}
-    let place symbol qty side type' tif = 
+    let place (symbol: string) (qty: int) (side: Side) (type': Type') (tif: TimeInForce) = 
         let data = 
-            {symbol = symbol; qty = qty; side = side; type' = type'; time_in_force = tif }
+            {|symbol = symbol; qty = string qty; side = side.ToString(); type' = type'.ToString(); time_in_force = tif.ToString()|}
             |> Json.serialize 
         fun () ->
             Http.Request( ORDERS_POINT, 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>alpaca</name></assembly>
+<members>
+<member name="T:AlpacaFs.Data.SchemaRecord">
+<summary>
+ [omit]
+ 
+</summary>
+</member>
+<member name="T:AlpacaFs.Data.Schema">
+<summary>
+ [omit]
+ 
+</summary>
+</member>
+<member name="M:AlpacaFs.Data.RealTime.status">
+<summary>
+ Gets the status of the stream connection
+</summary>
+</member>
+<member name="M:AlpacaFs.Data.RealTime.onMessage(Microsoft.FSharp.Core.FSharpFunc{AlpacaFs.Trade[],Microsoft.FSharp.Core.Unit})">
+<summary>
+ Applies a function on the message received
+</summary>
+</member>
+<member name="M:AlpacaFs.Data.RealTime.subscribe(Microsoft.FSharp.Collections.FSharpList{System.String},Microsoft.FSharp.Collections.FSharpList{System.String},Microsoft.FSharp.Collections.FSharpList{System.String})">
+<summary>
+ Start listening for trades, quotes, and bars of specific symbols
+</summary>
+</member>
+<member name="M:AlpacaFs.Data.RealTime.authenticate">
+<summary>
+ Authinticates the connection to the stream                
+</summary>
+</member>
+<member name="M:AlpacaFs.Data.RealTime.connect">
+<summary>
+ Connects to the stream
+</summary>
+</member>
+<member name="M:AlpacaFs.Data.Historical.Bars.get(System.DateTime,System.DateTime,System.String,System.Int32,AlpacaFs.TimeFrame)">
+<summary>
+ returns aggregate historical data for the requested securities
+</summary>
+</member>
+<member name="M:AlpacaFs.Data.Historical.Quotes.get(System.DateTime,System.DateTime,System.String,System.Int32)">
+<summary>
+ provides NBBO quotes for a given ticker symbol
+</summary>
+</member>
+<member name="M:AlpacaFs.Data.Historical.Trades.get(System.DateTime,System.DateTime,System.String)">
+<summary>
+ Get the trades of a stock from start to end&apos;
+</summary>
+</member>
+<member name="M:AlpacaFs.AssetModule.getByID(System.String)">
+<summary>
+ for an asset a, it returns info about it such as its exchange, tradability, fractionability, etc.
+</summary>
+</member>
+<member name="M:AlpacaFs.Calendar.list(System.DateTime,System.DateTime)">
+ <summary> Return market days</summary>
+ <param name="start"> start ∈ [1970, 2029] </param>
+ <param name="end'"> end' ∈ [1970, 2029] </param>
+</member>
+<member name="M:AlpacaFs.ClockModule.get">
+ <summary> Returns whether the market is close or open, the next open date,  and the next close date</summary>
+</member>
+</members>
+</doc>

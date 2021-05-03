@@ -11,6 +11,7 @@
           "FSharp.Core": "5.0.0",
           "FSharp.Data": "4.0.1",
           "FSharp.Json": "0.4.0",
+          "FSharp.SystemTextJson": "0.16.6",
           "Flurl": "3.0.1",
           "Json.Net": "1.0.25"
         },
@@ -97,6 +98,18 @@
           }
         }
       },
+      "FSharp.SystemTextJson/0.16.6": {
+        "dependencies": {
+          "FSharp.Core": "5.0.0",
+          "System.Text.Json": "4.6.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FSharp.SystemTextJson.dll": {
+            "assemblyVersion": "0.16.0.0",
+            "fileVersion": "0.16.6.58568"
+          }
+        }
+      },
       "Json.Net/1.0.25": {
         "runtime": {
           "lib/netstandard2.0/Json.Net.dll": {
@@ -104,7 +117,8 @@
             "fileVersion": "1.0.25.1"
           }
         }
-      }
+      },
+      "System.Text.Json/4.6.0": {}
     }
   },
   "libraries": {
@@ -141,12 +155,26 @@
       "path": "fsharp.json/0.4.0",
       "hashPath": "fsharp.json.0.4.0.nupkg.sha512"
     },
+    "FSharp.SystemTextJson/0.16.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1qkYWskWMWi/y35sRarCaQKmTzP/1c0wlXytInt1rinPWa9TcouRblGZWhoI+y8DjlKGYJXb8pYuPiPdSk3MGQ==",
+      "path": "fsharp.systemtextjson/0.16.6",
+      "hashPath": "fsharp.systemtextjson.0.16.6.nupkg.sha512"
+    },
     "Json.Net/1.0.25": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-Aj5kjteD5mBmUSL0D64R9SzuQuM/dtHV2JcbVJ1iGOZjp3hGO4eoWY/D5Nzxe+kR15KAERQS1e2mU7mFjwKyDg==",
       "path": "json.net/1.0.25",
       "hashPath": "json.net.1.0.25.nupkg.sha512"
+    },
+    "System.Text.Json/4.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4F8Xe+JIkVoDJ8hDAZ7HqLkjctN/6WItJIzQaifBwClC7wmoLSda/Sv2i6i1kycqDb3hWF4JCVbpAweyOKHEUA==",
+      "path": "system.text.json/4.6.0",
+      "hashPath": "system.text.json.4.6.0.nupkg.sha512"
     }
   }
 }

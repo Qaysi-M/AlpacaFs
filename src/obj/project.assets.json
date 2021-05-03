@@ -85,6 +85,19 @@
           "lib/netstandard2.0/FSharp.Json.dll": {}
         }
       },
+      "FSharp.SystemTextJson/0.16.6": {
+        "type": "package",
+        "dependencies": {
+          "FSharp.Core": "4.7.0",
+          "System.Text.Json": "4.6.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/FSharp.SystemTextJson.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FSharp.SystemTextJson.dll": {}
+        }
+      },
       "Json.Net/1.0.25": {
         "type": "package",
         "compile": {
@@ -92,6 +105,15 @@
         },
         "runtime": {
           "lib/netstandard2.0/Json.Net.dll": {}
+        }
+      },
+      "System.Text.Json/4.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.0/System.Text.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/System.Text.Json.dll": {}
         }
       }
     }
@@ -173,6 +195,19 @@
         "lib/netstandard2.0/FSharp.Json.dll"
       ]
     },
+    "FSharp.SystemTextJson/0.16.6": {
+      "sha512": "1qkYWskWMWi/y35sRarCaQKmTzP/1c0wlXytInt1rinPWa9TcouRblGZWhoI+y8DjlKGYJXb8pYuPiPdSk3MGQ==",
+      "type": "package",
+      "path": "fsharp.systemtextjson/0.16.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fsharp.systemtextjson.0.16.6.nupkg.sha512",
+        "fsharp.systemtextjson.nuspec",
+        "lib/netstandard2.0/FSharp.SystemTextJson.dll",
+        "lib/netstandard2.0/FSharp.SystemTextJson.pdb"
+      ]
+    },
     "Json.Net/1.0.25": {
       "sha512": "Aj5kjteD5mBmUSL0D64R9SzuQuM/dtHV2JcbVJ1iGOZjp3hGO4eoWY/D5Nzxe+kR15KAERQS1e2mU7mFjwKyDg==",
       "type": "package",
@@ -184,6 +219,27 @@
         "json.net.nuspec",
         "lib/netstandard2.0/Json.Net.dll"
       ]
+    },
+    "System.Text.Json/4.6.0": {
+      "sha512": "4F8Xe+JIkVoDJ8hDAZ7HqLkjctN/6WItJIzQaifBwClC7wmoLSda/Sv2i6i1kycqDb3hWF4JCVbpAweyOKHEUA==",
+      "type": "package",
+      "path": "system.text.json/4.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/System.Text.Json.dll",
+        "lib/net461/System.Text.Json.xml",
+        "lib/netcoreapp3.0/System.Text.Json.dll",
+        "lib/netcoreapp3.0/System.Text.Json.xml",
+        "lib/netstandard2.0/System.Text.Json.dll",
+        "lib/netstandard2.0/System.Text.Json.xml",
+        "system.text.json.4.6.0.nupkg.sha512",
+        "system.text.json.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -191,6 +247,7 @@
       "FSharp.Core >= 5.0.0",
       "FSharp.Data >= 4.0.1",
       "FSharp.Json >= 0.4.0",
+      "FSharp.SystemTextJson >= 0.16.6",
       "Flurl >= 3.0.1",
       "Json.Net >= 1.0.25"
     ]
@@ -249,6 +306,11 @@
           "FSharp.Json": {
             "target": "Package",
             "version": "[0.4.0, )",
+            "generatePathProperty": true
+          },
+          "FSharp.SystemTextJson": {
+            "target": "Package",
+            "version": "[0.16.6, )",
             "generatePathProperty": true
           },
           "Flurl": {

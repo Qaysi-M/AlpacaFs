@@ -24,12 +24,12 @@ type Asset = {
         {id = ""; class' = Asset.Class'.USEquity; exchange = Exchange.NASDAQ; symbol = ""; status = Asset.Status.Inactive; tradable = false;
          marginable = false; shortable= false; easy_to_borrow = false; fractionable = false}
 
-[<RequireQualifiedAccessAttribute>]
+[<RequireQualifiedAccess>]
 module Asset =
     let private ASSETS_POINT = Url.Combine(BASE_POINT, "/assets" )
 
     // -- Modeling --
-
+    [<RequireQualifiedAccess>]
     type Class' = | USEquity with
         static member internal string = function USEquity -> "us_equity"
     and internal ClassTransform() =
@@ -38,9 +38,9 @@ module Asset =
                 member x.toTargetType class' = Class'.string (class' :?> Class') :> obj
                 member x.fromTargetType (str) = 
                     match (str :?> string) with 
-                    | "us_equity" -> USEquity | _ -> USEquity 
+                    | "us_equity" -> Class'.USEquity | _ -> Class'.USEquity 
                     :> obj
-
+    [<RequireQualifiedAccess>]
     type Status = Active | Inactive with
         static member internal string = function Active -> "active" | Inactive -> "inactive"
     and internal StatusTransform() =
@@ -49,7 +49,7 @@ module Asset =
                 member x.toTargetType status = Status.string (status :?> Status) :> obj
                 member x.fromTargetType (str) = 
                     match (str :?> string) with 
-                    | "active" -> Active | "inactive" -> Inactive | _ -> Inactive 
+                    | "active" -> Status.Active | "inactive" -> Status.Inactive | _ -> Status.Inactive 
                     :> obj
 
 

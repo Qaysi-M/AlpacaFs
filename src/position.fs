@@ -28,19 +28,20 @@ type Position = {
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] current_price: decimal option
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] lastday_price: decimal option
         [<JsonField(Transform=typeof<JsonTransforms.DecimalTransform>)>] change_today: decimal option
-    }
+    } with 
+    static member Zero : Position = 
+        {asset_id = "" ; symbol= ""; exchange = None; asset_class= None;
+         avg_entry_price = None; qty = None; side = None; market_value =None; cost_basis =None;
+         unrealized_pl = None; unrealized_plpc = None; unrealized_intraday_pl = None; 
+         unrealized_intraday_plpc = None; current_price = None; lastday_price = None; change_today = None}
+
 
 
 
 [<RequireQualifiedAccess>]
 module Position = 
     
-    type IDOrSymbol = 
-        | ID of string
-        | Symbol of string
-    
     let private POSITIONS_POINT = Url.Combine(BASE_POINT, "/positions" )
-
 
     let getByID (id: string) = 
         let POSITION_POINT id = Url.Combine(POSITIONS_POINT, id)

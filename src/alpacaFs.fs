@@ -10,8 +10,8 @@ type Exchange = AMEX | ARCA | BATS | NYSE | NASDAQ | NYSEARCA with
 
 
 type TimeInForce = DAY | GTC | OPG | CLS | IOC | FOK with    
-    static member private string tif = 
-           nameof(tif).ToLower()
+    member private this.toString() = 
+           nameof(this).ToLower()
 
 
 type TimeFrame = Min | Hour | Day with    
@@ -27,7 +27,9 @@ module internal Helpers =
                         try 
                             text |> Json.deserialize<'T> |> Ok
                         with   
-                            | :? FSharp.Json.JsonDeserializationError as ex -> ex.Message |> Error
+                            | :? FSharp.Json.JsonDeserializationError as ex -> 
+                                $"A json Error Occured: {ex.Message} \n while trying to deserilize: {text} \n  "
+                                |> Error
                     | _ -> Error ("Not Text")
             with
                 | :? System.Net.WebException as ex -> ex.Message |> Error
